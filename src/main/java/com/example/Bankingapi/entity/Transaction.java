@@ -28,7 +28,6 @@ public class Transaction {
 	@Column(name = "time")
 	private String time;
 	
-	
 	@Column(name = "status")
 	private String status;
 	

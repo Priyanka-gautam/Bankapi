@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="addaccounts")
@@ -14,23 +15,27 @@ public class AddAccountno {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@Column(name = "senderaccountno",unique=true)
-	private int senderaccountno;
-	
-	@Column(name = "name")
+    @NotNull
+	@Column(name ="name")
 	private String name;
-	
-	
+    
+    @NotNull
+  	@Column(name = "recieveraccountno",unique=true)
+  	private int recieveraccountno;
+    
+    @NotNull
 	@Column(name = "bankname")
 	private String bankname;
-	
+
+    @NotNull
 	@Column(name = "ifccode")
 	private String ifccode;
 
-	public AddAccountno(int senderaccountno, String name, String bankname, String ifccode) {
+	public AddAccountno(@NotNull String name, @NotNull int recieveraccountno, @NotNull String bankname,
+			@NotNull String ifccode) {
 		super();
-		this.senderaccountno = senderaccountno;
 		this.name = name;
+		this.recieveraccountno = recieveraccountno;
 		this.bankname = bankname;
 		this.ifccode = ifccode;
 	}
@@ -43,20 +48,20 @@ public class AddAccountno {
 		this.id = id;
 	}
 
-	public int getSenderaccountno() {
-		return senderaccountno;
-	}
-
-	public void setSenderaccountno(int senderaccountno) {
-		this.senderaccountno = senderaccountno;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getRecieveraccountno() {
+		return recieveraccountno;
+	}
+
+	public void setRecieveraccountno(int recieveraccountno) {
+		this.recieveraccountno = recieveraccountno;
 	}
 
 	public String getBankname() {
@@ -74,8 +79,7 @@ public class AddAccountno {
 	public void setIfccode(String ifccode) {
 		this.ifccode = ifccode;
 	}
+    
+    
 
-	
-	
-	
 }

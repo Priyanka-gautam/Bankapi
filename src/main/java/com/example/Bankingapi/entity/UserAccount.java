@@ -8,9 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "addamount")
-public class AddAmount {
-	
+@Table(name = "useraccount")
+public class UserAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -21,14 +20,12 @@ public class AddAmount {
 	@Column(name = "balance")
 	private int balance;
 	
-	@Column(name = "accountno")
+	@Column(name = "accountno", unique=true)
 	private int accountno;
 
-	public AddAmount(int userid, int balance, int accountno) {
+	public UserAccount() {
 		super();
-		this.userid = userid;
-		this.balance = balance;
-		this.accountno = accountno;
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getId() {
@@ -63,7 +60,11 @@ public class AddAmount {
 		this.accountno = accountno;
 	}
 
-	
+	public Object getDeposit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 	
