@@ -16,6 +16,7 @@ public class Message {
 	public String transaction = "transaction is on the process, You will get a mail after the transaction is complete";
 	public String addacount = "account added successfully ";
 	public String emailreport = "Your transaction is successful, and your account balance is Rs. ";
+	
 	// 404
 	public String accountnumbernotexist = "Account number doesn't exist";
 	public String transactioninteruptreport = "Transaction interupted";
@@ -29,7 +30,8 @@ public class Message {
 	public String valid = "valid";
 	public String testingtransaction = "Testing Transaction";
 	
-	
+
+	public String balances = "Your balance IS : ";
 	public String getMessage() {
 		return message;
 	}

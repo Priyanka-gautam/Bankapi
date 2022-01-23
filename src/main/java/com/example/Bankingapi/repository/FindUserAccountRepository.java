@@ -14,4 +14,12 @@ public interface FindUserAccountRepository extends JpaRepository <UserAccount, L
 	
 	@Query(value="select balance from useraccount u where u.accountno =:Bnumber", nativeQuery=true)
 	Integer getuserbalance(@Param("Bnumber") int Bnumber);
+	
+	@Query(value="select email from users u where u.email =:Eemail", nativeQuery=true)
+	String getemail(@Param("Eemail") String Eemail);
+	
+	@Query(value="select phonenumber from users u where u.phonenumber =:Pphonenumber", nativeQuery=true)
+	String phone(@Param("Pphonenumber") String Pphonenumber);
+	
+	
 }

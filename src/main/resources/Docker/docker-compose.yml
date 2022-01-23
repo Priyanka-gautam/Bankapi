@@ -1,0 +1,96 @@
+version: "3.7"
+
+services:
+
+  zookeeperb:
+    image: wurstmeister/zookeeper
+    container_name: zookeeperb
+    restart: always
+    ports:
+      - 2181:2181
+
+  bankkafka:
+    image: wurstmeister/kafka
+    container_name: bankkafka
+    restart: always
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeperb
+    links:
+      - zookeeperb:zookeeperb
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: bankkafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeperb:2181
+
+  mysqldb2:
+    image: mysql:8
+    restart: unless-stopped
+    container_name: mysqldb2
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=usersDB
+
+  bankapi:
+    image: newbankapi
+    container_name: bankapi
+    depends_on:
+      - bankkafka
+      - mysqldb2
+  
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - bankkafka
+      - mysqldb2
+
+    links:
+      - bankkafka:bankkafka
+
+  streamone:
+    image: transactionstream
+    container_name: streamone
+    depends_on:
+      - bankkafka
+    restart: always
+    ports:
+      - 8020:8020
+    depends_on:
+      - bankkafka
+      
+
+    links:
+      - bankkafka:bankkafka
+
+  streamtwo:
+    image: transactionstreamback
+    container_name: streamtwo
+    depends_on:
+      - bankkafka
+    restart: always
+    ports:
+      - 8404:8404
+    depends_on:
+      - bankkafka
+    links:
+      - bankkafka:bankkafka
+
+
+  bankvalid:
+    image: bankvalidtransaction
+    container_name: bankvalid
+    depends_on:
+      - bankkafka
+      - mysqldb2
+  
+    restart: always
+    ports:
+      - 8011:8011
+    depends_on:
+      - bankkafka
+      - mysqldb2
+
+    links:
+      - bankkafka:bankkafka
+    
